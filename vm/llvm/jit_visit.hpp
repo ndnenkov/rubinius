@@ -11,14 +11,9 @@
 #include "llvm/jit_operations.hpp"
 #include "llvm/inline.hpp"
 #include "llvm/jit_context.hpp"
-
 #include "llvm/stack_args.hpp"
 
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/DerivedTypes.h>
-#else
-#include <llvm/DerivedTypes.h>
-#endif
 
 #include <list>
 

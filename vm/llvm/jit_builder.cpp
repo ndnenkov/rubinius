@@ -11,13 +11,7 @@
 
 #include "instruments/tooling.hpp"
 #include <llvm/Analysis/CaptureTracking.h>
-#if RBX_LLVM_API_VER > 304
 #include <llvm/IR/DebugInfo.h>
-#elif RBX_LLVM_API_VER > 301
-#include <llvm/DebugInfo.h>
-#else
-#include <llvm/Analysis/DebugInfo.h>
-#endif
 
 // There is no official language identifier for Ruby.
 // Define it as an user-defined one.
@@ -53,36 +47,23 @@ namespace jit {
   }
 
   void Builder::set_definition_location() {
+    // TODO: LLVM-3.6
+    /*
     std::string file_str = ctx_->llvm_state()->symbol_debug_str(info_.method()->file());
     debug_builder_.createCompileUnit(DW_LANG_Ruby, file_str,
         "", "rubinius", true, "", 0);
     DIFile file = debug_builder().createFile(file_str, "");
 
-#if RBX_LLVM_API_VER > 303
     DIType dummy_return_type = debug_builder().createNullPtrType();
     Value* dummy_signature[] = {
-      &*dummy_return_type,
+      _type,
     };
     DICompositeType dummy_subroutine_type = debug_builder().createSubroutineType(file,
         debug_builder().getOrCreateArray(dummy_signature));
-#else
-    DIType dummy_return_type = debug_builder().createNullPtrType("dummy type");
-    Value* dummy_signature[] = {
-      &*dummy_return_type,
-    };
-    DIType dummy_subroutine_type = debug_builder().createSubroutineType(file,
-        debug_builder().getOrCreateArray(dummy_signature));
-#endif
 
-#if RBX_LLVM_API_VER > 300
     DISubprogram subprogram = debug_builder().createFunction(file, "", "",
         file, info_.method()->start_line(), dummy_subroutine_type, false, true, 0, 0,
         false, info_.function());
-#else
-    DISubprogram subprogram = debug_builder().createFunction(file, "", "",
-        file, info_.method()->start_line(), dummy_subroutine_type, false, true, 0,
-        false, info_.function());
-#endif
     // FnSpecificMDNode is used in finalize(), so to avoid memory leak,
     // initialize it with empty one by inserting here.
     llvm::getOrInsertFnSpecificMDNode(*ctx_->module(), subprogram);
@@ -90,6 +71,7 @@ namespace jit {
     b().SetCurrentDebugLocation(llvm::DebugLoc::get(info_.method()->start_line(), 0,
                                 subprogram));
     debug_builder_.finalize();
+    */
   }
 
   void Builder::set_current_location(opcode ip) {

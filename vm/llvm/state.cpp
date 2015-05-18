@@ -32,27 +32,11 @@
 #include "instruments/timing.hpp"
 #include "dtrace/dtrace.h"
 
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/DataLayout.h>
-#elif RBX_LLVM_API_VER >= 302
-#include <llvm/DataLayout.h>
-#else
-#include <llvm/Target/TargetData.h>
-#endif
-#if RBX_LLVM_API_VER >= 305
 #include <llvm/IR/Verifier.h>
 #include <llvm/IR/CFG.h>
-#else
-#include <llvm/Analysis/Verifier.h>
-#include <llvm/Support/CFG.h>
-#endif
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/CallingConv.h>
-#else
-#include <llvm/CallingConv.h>
-#endif
 #include <llvm/Analysis/Passes.h>
-// #include <llvm/LinkAllPasses.h>
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/Support/Format.h>
 #include <llvm/Target/TargetOptions.h>
@@ -113,18 +97,11 @@ namespace rubinius {
       }
     }
 
-#if RBX_LLVM_API_VER <= 300
-    llvm::NoFramePointerElim = true;
-#endif
     llvm::InitializeNativeTarget();
     llvm::InitializeNativeTargetAsmPrinter();
 
     memory_ = new jit::RubiniusJITMemoryManager();
-#if RBX_LLVM_API_VER > 300
     jit_event_listener_ = llvm::JITEventListener::createOProfileJITEventListener();
-#else
-    jit_event_listener_ = llvm::createOProfileJITEventListener();
-#endif
 
     fixnum_class_id_   = G(fixnum_class)->class_id();
     integer_class_id_  = G(integer)->class_id();

@@ -3,12 +3,7 @@
 
 #include <list>
 
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/LLVMContext.h>
-#else
-#include <llvm/LLVMContext.h>
-#endif
-
 #include "llvm/state.hpp"
 #include "llvm/jit_memory_manager.hpp"
 

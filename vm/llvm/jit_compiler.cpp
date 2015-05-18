@@ -15,25 +15,10 @@
 
 #include "object_memory.hpp"
 
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/DataLayout.h>
-#elif RBX_LLVM_API_VER >= 302
-#include <llvm/DataLayout.h>
-#else
-#include <llvm/Target/TargetData.h>
-#endif
-#if RBX_LLVM_API_VER >= 305
 #include <llvm/IR/Verifier.h>
 #include <llvm/IR/CFG.h>
-#else
-#include <llvm/Analysis/Verifier.h>
-#include <llvm/Support/CFG.h>
-#endif
-#if RBX_LLVM_API_VER >= 303
 #include <llvm/IR/CallingConv.h>
-#else
-#include <llvm/CallingConv.h>
-#endif
 #include <llvm/Transforms/Scalar.h>
 #include <llvm/Analysis/Passes.h>
 
@@ -60,11 +45,13 @@ namespace rubinius {
 namespace jit {
   void Compiler::show_machine_code() {
     llvm::outs() << "[[[ JIT Machine Code: " << function_->getName() << " ]]]\n";
-    LLVMState::show_machine_code(mci_->address(), mci_->size());
+    // TODO: LLVM-3.6 LLVMState::show_machine_code(mci_->address(), mci_->size());
   }
 
   void* Compiler::generate_function(bool indy) {
-    if(!mci_) {
+    return NULL;
+    // TODO: LLVM-3.6
+    // if(!mci_) {
       if(!function_) return NULL;
 
       if(indy) ctx_->llvm_state()->shared().gc_independent(ctx_->llvm_state()->vm());
@@ -102,11 +89,7 @@ namespace jit {
         (*i)->eraseFromParent();
       }
 
-#if RBX_LLVM_API_VER >= 305
       if(Broken or llvm::verifyFunction(*function_, &llvm::outs())) {
-#else
-      if(Broken or llvm::verifyFunction(*function_, PrintMessageAction)) {
-#endif
         llvm::outs() << "ERROR: compilation error detected.\n";
         llvm::outs() << "ERROR: Please report the above message and the\n";
         llvm::outs() << "       code below to http://github.com/rubinius/rubinius/issues\n";
@@ -123,8 +106,8 @@ namespace jit {
         llvm::outs() << *function_ << "\n";
       }
 
-      mci_ = new llvm::MachineCodeInfo();
-      ctx_->engine()->runJITOnFunction(function_, mci_);
+      // TODO: LLVM-3.6
+      // ctx_->engine()->runJITOnFunction(function_, mci_);
 
       // If we're not in JIT debug mode, delete the body IR, now that we're
       // done with it.
@@ -135,22 +118,25 @@ namespace jit {
 
       if(indy) ctx_->llvm_state()->shared().gc_dependent(ctx_->llvm_state()->vm());
 
-      ctx_->llvm_state()->vm()->metrics().memory.jit_bytes += mci_->size();
-
+      // TODO: LLVM-3.6
+      // ctx_->llvm_state()->vm()->metrics().memory.jit_bytes += mci_->size();
+      // ctx_->llvm_state()->add_code_bytes(mci_->size());
       // Inject the RuntimeData objects used into the original CompiledCode
       // Do this way after we've validated the IR so things are consistent.
 
-      void* native_function = ctx_->native_function();
+      // TODO: LLVM-3.6
+      // void* native_function = ctx_->native_function();
 
-      ctx_->runtime_data_holder()->set_function(native_function,
-                                   mci_->address(), mci_->size());
+      // TODO: LLVM-3.6
+      // ctx_->runtime_data_holder()->set_function(native_function,
+      //                              mci_->address(), mci_->size());
 
       // info.method()->set_jit_data(ctx.runtime_data_holder());
       ctx_->llvm_state()->shared().om->add_code_resource(
           ctx_->llvm_state()->state(), ctx_->runtime_data_holder());
     }
 
-    return mci_->address();
+    // return mci_->address();
   }
 
   void Compiler::compile(JITCompileRequest* req) {
