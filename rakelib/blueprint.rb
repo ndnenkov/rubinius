@@ -73,8 +73,8 @@ Daedalus.blueprint do |i|
   gcc.ldflags << Rubinius::BUILD_CONFIG[:user_ldflags]
 
   # Files
-  subdirs = %w[ builtin capi util instruments gc llvm missing ].map do |x|
-    "vm/#{x}/*.{cpp,c}"
+  subdirs = %w[ builtin capi util instruments gc jit missing ].map do |x|
+    "vm/#{x}/**/*.{cpp,c}"
   end
 
   files = i.source_files "vm/*.{cpp,c}", *subdirs

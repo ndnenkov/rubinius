@@ -1,4 +1,5 @@
 #include "arguments.hpp"
+
 #include "builtin/array.hpp"
 #include "builtin/bignum.hpp"
 #include "builtin/block_environment.hpp"
@@ -19,12 +20,15 @@
 #include "builtin/symbol.hpp"
 #include "builtin/system.hpp"
 #include "builtin/variable_scope.hpp"
+
 #include "call_frame.hpp"
 #include "compiled_file.hpp"
 #include "configuration.hpp"
 #include "config_parser.hpp"
 #include "dtrace/dtrace.h"
+
 #include "gc/walker.hpp"
+
 #include "global_cache.hpp"
 #include "helpers.hpp"
 #include "instruments/tooling.hpp"
@@ -34,10 +38,11 @@
 #include "on_stack.hpp"
 #include "signal.hpp"
 #include "windows_compat.h"
+#include "paths.h"
+
 #include "util/sha1.h"
 #include "util/timing.h"
 #include "util/logger.hpp"
-#include "paths.h"
 
 #include <vector>
 #include <errno.h>
@@ -59,9 +64,9 @@
 #endif
 
 #ifdef ENABLE_LLVM
-#include "llvm/state.hpp"
-#include "llvm/jit_context.hpp"
-#include "llvm/jit_compiler.hpp"
+#include "jit/llvm/state.hpp"
+#include "jit/llvm/context.hpp"
+#include "jit/llvm/compiler.hpp"
 #endif
 
 #include "missing/setproctitle.h"

@@ -21,7 +21,7 @@
 #include "ontology.hpp"
 
 #ifdef ENABLE_LLVM
-#include "llvm/state.hpp"
+#include "jit/llvm/state.hpp"
 #endif
 
 #include <iostream>

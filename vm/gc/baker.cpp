@@ -18,7 +18,7 @@
 #include "capi/tag.hpp"
 
 #ifdef ENABLE_LLVM
-#include "llvm/state.hpp"
+#include "jit/llvm/state.hpp"
 #endif
 
 namespace rubinius {
