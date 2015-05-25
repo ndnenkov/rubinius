@@ -20,9 +20,7 @@
 #include "builtin/block_environment.hpp"
 #include "capi/handle.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
-#endif
 
 #include "instruments/tooling.hpp"
 
@@ -39,9 +37,7 @@ namespace rubinius {
     , global_cache_(state->shared.global_cache)
     , threads_(state->shared.threads())
     , global_handle_locations_(state->om->global_capi_handle_locations())
-#ifdef ENABLE_LLVM
     , llvm_state_(state->shared.llvm_state)
-#endif
   { }
 
   GarbageCollector::GarbageCollector(ObjectMemory *om)
@@ -241,7 +237,6 @@ namespace rubinius {
         nmf->handles().gc_scan(this);
       }
 
-#ifdef ENABLE_LLVM
       if(jit::RuntimeDataHolder* jd = call_frame->jit_data()) {
         jd->set_mark();
 
@@ -254,7 +249,6 @@ namespace rubinius {
         rd->name_ = (Symbol*)mark_object(rd->name());
         rd->module_ = (Module*)mark_object(rd->module());
       }
-#endif
 
       if(call_frame->scope && call_frame->compiled_code) {
         saw_variable_scope(call_frame, displace(call_frame->scope, offset));

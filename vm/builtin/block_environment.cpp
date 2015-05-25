@@ -20,9 +20,7 @@
 #include "on_stack.hpp"
 #include "ontology.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
-#endif
 
 #include <iostream>
 
@@ -85,11 +83,9 @@ namespace rubinius {
 
     state->vm()->metrics().machine.blocks_invoked++;
 
-#ifdef ENABLE_LLVM
     if(executor ptr = mcode->unspecialized) {
       return (*((BlockExecutor)ptr))(state, previous, env, args, invocation);
     }
-#endif
 
     return execute_interpreter(state, previous, env, args, invocation);
   }
@@ -404,7 +400,6 @@ namespace rubinius {
       return 0;
     }
 
-#ifdef ENABLE_LLVM
     if(mcode->call_count >= 0) {
       if(mcode->call_count >= state->shared().config.jit_threshold_compile) {
         OnStack<1> os(state, env);
@@ -415,7 +410,6 @@ namespace rubinius {
         mcode->call_count++;
       }
     }
-#endif
 
     StackVariables* scope = ALLOCA_STACKVARIABLES(mcode->number_of_locals);
 

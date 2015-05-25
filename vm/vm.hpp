@@ -434,10 +434,8 @@ namespace rubinius {
 
     Object* path2class(const char* name);
 
-#ifdef ENABLE_LLVM
     llvm::Module* llvm_module();
     void llvm_cleanup();
-#endif
 
     void print_backtrace();
 

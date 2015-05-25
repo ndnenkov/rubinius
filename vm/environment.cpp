@@ -22,10 +22,8 @@
 
 #include "util/logger.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
 #include <llvm/Support/ManagedStatic.h>
-#endif
 
 #include "gc/immix_marker.hpp"
 #include "gc/finalize.hpp"
@@ -166,11 +164,9 @@ namespace rubinius {
 
     if(state->shared().config.jit_disabled) return;
 
-#ifdef ENABLE_LLVM
     if(!state->shared().llvm_state) {
       state->shared().llvm_state = new LLVMState(state);
     }
-#endif
   }
 
   void Environment::stop_logging(STATE) {
@@ -182,13 +178,11 @@ namespace rubinius {
 
     if(state->shared().config.jit_disabled) return;
 
-#ifdef ENABLE_LLVM
     if(state->shared().llvm_state) {
       state->shared().llvm_state->stop(state);
     }
 
     llvm::llvm_shutdown();
-#endif
   }
 
   void Environment::start_finalizer(STATE) {

@@ -5,9 +5,7 @@
 
 #include "ontology.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
-#endif
 
 namespace rubinius {
   void JIT::init(STATE) {
@@ -24,9 +22,6 @@ namespace rubinius {
   Object* JIT::compile(STATE, Object* object, CompiledCode* code,
                        Object* block_environment, CallFrame* call_frame)
   {
-#ifndef ENABLE_LLVM
-    return cFalse;
-#else
     if(!CBOOL(enabled())) return cFalse;
 
     GCTokenImpl gct;
@@ -38,7 +33,6 @@ namespace rubinius {
         block_env, !block_env->nil_p());
 
     return cTrue;
-#endif
   }
 
   Object* JIT::compile_threshold(STATE) {
@@ -57,10 +51,8 @@ namespace rubinius {
   Object* JIT::enable(STATE) {
     if(!CBOOL(enabled())) return cFalse;
 
-#ifdef ENABLE_LLVM
     state->shared().llvm_state->enable(state);
     enabled(state, cTrue);
-#endif
 
     return cTrue;
   }
@@ -70,12 +62,10 @@ namespace rubinius {
   {
     if(!CBOOL(enabled())) return cFalse;
 
-#ifdef ENABLE_LLVM
     GCTokenImpl gct;
 
     LLVMState* ls = state->shared().llvm_state;
     ls->compile_soon(state, gct, code, call_frame, receiver_class, block_env, is_block);
-#endif
 
     return cTrue;
   }
@@ -85,12 +75,10 @@ namespace rubinius {
   {
     if(!CBOOL(enabled())) return cFalse;
 
-#ifdef ENABLE_LLVM
     GCTokenImpl gct;
 
     LLVMState* ls = state->shared().llvm_state;
     ls->compile_callframe(state, gct, code, call_frame, primitive);
-#endif
 
     return cTrue;
   }
@@ -98,10 +86,8 @@ namespace rubinius {
   Object* JIT::start_method_update(STATE) {
     if(!CBOOL(enabled())) return cFalse;
 
-#ifdef ENABLE_LLVM
     LLVMState* ls = state->shared().llvm_state;
     ls->start_method_update();
-#endif
 
     return cTrue;
   }
@@ -109,10 +95,8 @@ namespace rubinius {
   Object* JIT::end_method_update(STATE) {
     if(!CBOOL(enabled())) return cFalse;
 
-#ifdef ENABLE_LLVM
     LLVMState* ls = state->shared().llvm_state;
     ls->end_method_update();
-#endif
 
     return cTrue;
   }

@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "config.h"
 
 #include "jit/llvm/disassembler.hpp"
@@ -131,7 +129,4 @@ namespace rubinius {
 
     return output.str();
   }
-
 }
-
-#endif

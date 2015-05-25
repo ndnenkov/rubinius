@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/state.hpp"
 #include "jit/llvm/compiler.hpp"
 #include "jit/llvm/method.hpp"
@@ -822,5 +820,3 @@ extern "C" {
     llvm::outs() << *val << "\n";
   }
 }
-
-#endif

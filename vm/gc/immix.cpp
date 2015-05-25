@@ -12,9 +12,7 @@
 
 #include "util/logger.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
-#endif
 
 namespace rubinius {
   void ImmixGC::Diagnostics::log() {
@@ -227,9 +225,7 @@ namespace rubinius {
       }
     }
 
-#ifdef ENABLE_LLVM
     if(LLVMState* ls = data->llvm_state()) ls->gc_scan(this);
-#endif
   }
 
   void ImmixGC::collect_finish(GCData* data) {

@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include <sys/param.h>
 
 #include "jit/llvm/inline_block_builder.hpp"
@@ -544,5 +542,3 @@ namespace jit {
   }
 }
 }
-
-#endif

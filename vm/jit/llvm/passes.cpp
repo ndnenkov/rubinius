@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/passes.hpp"
 #include "config.h"
 
@@ -474,5 +472,3 @@ namespace rubinius {
     return new AllocationEliminator();
   }
 }
-
-#endif

@@ -11,11 +11,9 @@
 #include "builtin/compiled_code.hpp"
 #include "gc/code_resource.hpp"
 
-#ifdef ENABLE_LLVM
 namespace llvm {
   class Function;
 }
-#endif
 
 namespace rubinius {
   typedef uintptr_t opcode;

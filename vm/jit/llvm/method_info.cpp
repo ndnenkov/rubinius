@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/state.hpp"
 #include "jit/llvm/method_info.hpp"
 #include "jit/llvm/context.hpp"
@@ -62,5 +60,3 @@ namespace rubinius {
   }
 
 }
-
-#endif

@@ -123,7 +123,6 @@ namespace rubinius {
   void VM::initialize_config() {
     State state(this);
 
-#ifdef ENABLE_LLVM
     Array* ary = Array::create(&state, 3);
 
     G(jit)->available(&state, cTrue);
@@ -142,11 +141,6 @@ namespace rubinius {
     } else {
       G(jit)->enabled(&state, cFalse);
     }
-#else
-    G(jit)->available(&state, cFalse);
-    G(jit)->properties(&state, nil<Array>());
-    G(jit)->enabled(&state, cFalse);
-#endif
   }
 
   /**

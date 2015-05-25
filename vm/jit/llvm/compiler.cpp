@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "machine_code.hpp"
 
 #include "builtin/fixnum.hpp"
@@ -290,5 +288,3 @@ namespace jit {
   }
 }
 }
-
-#endif

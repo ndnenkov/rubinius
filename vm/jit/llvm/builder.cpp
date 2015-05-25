@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "call_frame.hpp"
 #include "machine_code.hpp"
 
@@ -702,5 +700,3 @@ namespace jit {
   }
 }
 }
-
-#endif

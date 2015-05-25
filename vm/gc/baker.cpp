@@ -17,9 +17,7 @@
 #include "capi/handles.hpp"
 #include "capi/tag.hpp"
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
-#endif
 
 namespace rubinius {
 
@@ -232,9 +230,7 @@ namespace rubinius {
       }
     }
 
-#ifdef ENABLE_LLVM
     if(LLVMState* ls = data->llvm_state()) ls->gc_scan(this);
-#endif
 
     // Handle all promotions to non-young space that occurred.
     handle_promotions();

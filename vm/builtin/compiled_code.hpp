@@ -38,9 +38,7 @@ namespace rubinius {
 
     MachineCode* machine_code_;
 
-#ifdef ENABLE_LLVM
     jit::RuntimeDataHolder* jit_data_;
-#endif
 
   public:
     // Access directly from assembly, so has to be public.
@@ -51,7 +49,6 @@ namespace rubinius {
       return machine_code_;
     }
 
-#ifdef ENABLE_LLVM
     jit::RuntimeDataHolder* jit_data() {
       return jit_data_;
     }
@@ -59,7 +56,6 @@ namespace rubinius {
     void set_jit_data(jit::RuntimeDataHolder* rds) {
       jit_data_ = rds;
     }
-#endif
 
     bool can_specialize_p();
     void set_unspecialized(executor exec, jit::RuntimeDataHolder* rd);

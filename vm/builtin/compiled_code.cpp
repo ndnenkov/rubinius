@@ -21,11 +21,9 @@
 
 #include <ostream>
 
-#ifdef ENABLE_LLVM
 #include "jit/llvm/state.hpp"
 #include "jit/llvm/compiler.hpp"
 #include "jit/llvm/runtime.hpp"
-#endif
 
 namespace rubinius {
 
@@ -44,9 +42,7 @@ namespace rubinius {
 
     code->set_executor(CompiledCode::default_executor);
     code->machine_code_ = NULL;
-#ifdef ENABLE_LLVM
     code->jit_data_ = NULL;
-#endif
 
     return code;
   }
@@ -57,9 +53,7 @@ namespace rubinius {
 
     code->set_executor(CompiledCode::default_executor);
     code->machine_code_ = NULL;
-#ifdef ENABLE_LLVM
     code->jit_data_ = NULL;
-#endif
 
     return code;
   }
@@ -268,9 +262,7 @@ namespace rubinius {
 
     machine_code_->set_execute_status(MachineCode::eJIT);
 
-#ifdef ENABLE_LLVM
     jit_data_ = rd;
-#endif
     machine_code_->unspecialized = exec;
 
     // See if we can also just make this the normal execute
@@ -439,7 +431,6 @@ namespace rubinius {
     MachineCode* mcode = code->machine_code_;
     mcode->set_mark();
 
-#ifdef ENABLE_LLVM
     if(code->jit_data()) {
       code->jit_data()->set_mark();
       code->jit_data()->mark_all(code, mark);
@@ -452,7 +443,6 @@ namespace rubinius {
         mcode->specializations[i].jit_data->mark_all(code, mark);
       }
     }
-#endif
 
     for(size_t i = 0; i < mcode->call_site_count(); i++) {
       size_t index = mcode->call_site_offsets()[i];
@@ -496,7 +486,6 @@ namespace rubinius {
     } else {
       std::cout << "yes\n";
 
-#ifdef ENABLE_LLVM
       MachineCode* v = code->machine_code();
 
       for(int i = 0; i < MachineCode::cMaxSpecializations; i++) {
@@ -508,7 +497,6 @@ namespace rubinius {
             v->specializations[i].jit_data->native_size());
         llvm::outs() << "</MachineCode>\n";
       }
-#endif
     }
 
     close_body(level);

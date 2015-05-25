@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "prelude.hpp"
 #include "vm.hpp"
 #include "primitives.hpp"
@@ -20,4 +18,3 @@ namespace rubinius {
 #include "gen/jit_primitives.cpp"
 #include "gen/jit_resolver.cpp"
 }
-#endif

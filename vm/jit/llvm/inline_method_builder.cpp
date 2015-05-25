@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/inline_method_builder.hpp"
 #include "jit/llvm/method_info.hpp"
 
@@ -502,5 +500,3 @@ namespace jit {
 
 }
 }
-
-#endif

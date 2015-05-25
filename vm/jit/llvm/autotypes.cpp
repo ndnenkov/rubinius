@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "config.h"
 #include <llvm/IR/DataLayout.h>
 #include <llvm/IR/Verifier.h>
@@ -19,5 +17,3 @@ namespace autogen_types {
 #include "jit/llvm/types32.cpp.gen"
 #endif
 }
-
-#endif

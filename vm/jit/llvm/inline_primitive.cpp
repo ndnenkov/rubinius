@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/inline.hpp"
 #include "jit/llvm/context.hpp"
 
@@ -1851,5 +1849,3 @@ namespace rubinius {
     }
   }
 }
-
-#endif

@@ -1,5 +1,3 @@
-#ifdef ENABLE_LLVM
-
 #include "jit/llvm/operations.hpp"
 #include "jit/llvm/types.hpp"
 
@@ -137,5 +135,3 @@ namespace type {
   }
 }
 }
-
-#endif

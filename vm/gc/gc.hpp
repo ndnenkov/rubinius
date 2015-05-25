@@ -35,9 +35,7 @@ namespace rubinius {
     GlobalCache* global_cache_;
     ThreadList* threads_;
     std::list<capi::GlobalHandle*>* global_handle_locations_;
-#ifdef ENABLE_LLVM
     LLVMState* llvm_state_;
-#endif
 
   public:
     GCData(VM*);
@@ -66,11 +64,9 @@ namespace rubinius {
       return global_handle_locations_;
     }
 
-#ifdef ENABLE_LLVM
     LLVMState* llvm_state() {
       return llvm_state_;
     }
-#endif
   };
 
   class AddressDisplacement {
