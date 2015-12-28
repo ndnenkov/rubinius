@@ -140,6 +140,9 @@ namespace rubinius {
   void LLVMState::enable(STATE) {
     utilities::thread::SpinLock::LockGuard lg(shared_.llvm_state_lock());
 
+    // TODO LLVM 3.6
+    return;
+
     if(enabled_) return;
 
     start(state);
@@ -150,6 +153,9 @@ namespace rubinius {
   }
 
   void LLVMState::initialize(STATE) {
+    // TODO LLVM 3.6
+    return;
+
     InternalThread::initialize(state);
 
     method_update_lock_.init();

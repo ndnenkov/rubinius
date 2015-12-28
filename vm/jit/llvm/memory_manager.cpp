@@ -65,7 +65,8 @@ SOFTWARE.
 #include <llvm/Support/Memory.h>
 #include <llvm/Support/ErrorHandling.h>
 #include <llvm/Support/DynamicLibrary.h>
-#include <llvm/Config/config.h>
+// TODO: LLVM-3.6
+// #include <llvm/Config/config.h>
 #include <vector>
 #include <cassert>
 #include <climits>

@@ -48,6 +48,7 @@ namespace jit {
     return NULL;
     // TODO: LLVM-3.6
     // if(!mci_) {
+    if(false) {
       if(!function_) return NULL;
 
       if(indy) ctx_->llvm_state()->shared().gc_independent(ctx_->llvm_state()->vm());
